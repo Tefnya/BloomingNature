@@ -324,7 +324,7 @@ public class TabRegistry {
                 out.accept(ObjectRegistry.SUNGRASS.get());
                 out.accept(ObjectRegistry.TALL_SUNGRASS.get());
                 out.accept(ObjectRegistry.SILKGRASS.get());
-                out.accept(ObjectRegistry.TALL_SILKRASS.get());
+                out.accept(ObjectRegistry.TALL_SILKGRASS.get());
                 out.accept(ObjectRegistry.MOSSGRASS.get());
                 out.accept(ObjectRegistry.RED_OAT_GRASS.get());
                 out.accept(ObjectRegistry.TALL_RED_OAT_GRASS.get());
