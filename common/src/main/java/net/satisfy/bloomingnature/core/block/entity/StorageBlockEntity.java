@@ -18,11 +18,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class StorageBlockEntity extends BlockEntity {
     private int size;
-
     private NonNullList<ItemStack> inventory;
 
     public StorageBlockEntity(BlockPos pos, BlockState state) {
         super(EntityTypeRegistry.STORAGE_ENTITY.get(), pos, state);
+        this.size = 2;
+        this.inventory = NonNullList.withSize(this.size, ItemStack.EMPTY);
     }
 
     public StorageBlockEntity(BlockPos pos, BlockState state, int size) {
@@ -32,14 +33,19 @@ public class StorageBlockEntity extends BlockEntity {
     }
 
     public ItemStack removeStack(int slot) {
-        ItemStack stack = inventory.set(slot, ItemStack.EMPTY);
-        setChanged();
-        return stack;
+        if (slot >= 0 && slot < inventory.size()) {
+            ItemStack stack = inventory.set(slot, ItemStack.EMPTY);
+            setChanged();
+            return stack;
+        }
+        return ItemStack.EMPTY;
     }
 
     public void setStack(int slot, ItemStack stack) {
-        inventory.set(slot, stack);
-        setChanged();
+        if (slot >= 0 && slot < inventory.size()) {
+            inventory.set(slot, stack);
+            setChanged();
+        }
     }
 
     @Override
@@ -47,8 +53,9 @@ public class StorageBlockEntity extends BlockEntity {
         if (level != null && !level.isClientSide()) {
             Packet<ClientGamePacketListener> updatePacket = getUpdatePacket();
             for (ServerPlayer player : BloomingNatureGeneralUtil.tracking((ServerLevel) level, getBlockPos())) {
-                assert updatePacket != null;
-                player.connection.send(updatePacket);
+                if (updatePacket != null) {
+                    player.connection.send(updatePacket);
+                }
             }
         }
         super.setChanged();
@@ -57,7 +64,7 @@ public class StorageBlockEntity extends BlockEntity {
     @Override
     public void load(CompoundTag nbt) {
         super.load(nbt);
-        this.size = nbt.getInt("size");
+        this.size = Math.max(nbt.getInt("size"), 2);
         this.inventory = NonNullList.withSize(this.size, ItemStack.EMPTY);
         ContainerHelper.loadAllItems(nbt, this.inventory);
     }
@@ -77,12 +84,6 @@ public class StorageBlockEntity extends BlockEntity {
     @Override
     public @NotNull CompoundTag getUpdateTag() {
         return this.saveWithoutMetadata();
-    }
-
-    public void setInventory(NonNullList<ItemStack> inventory) {
-        for (int i = 0; i < inventory.size(); i++) {
-            this.inventory.set(i, inventory.get(i));
-        }
     }
 
     public NonNullList<ItemStack> getInventory() {
