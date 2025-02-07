@@ -31,12 +31,6 @@
       "type": "minecraft:weighted_state_provider",
       "entries": [
         {
-          "weight": 1,
-          "data": {
-            "Name": "minecraft:air"
-          }
-        },
-        {
           "weight": 5,
           "data": {
             "Name": "minecraft:birch_leaves",
@@ -49,6 +43,7 @@
         }
       ]
     },
+
     "trunk_placer": {
       "type": "minecraft:forking_trunk_placer",
       "base_height": 10,
