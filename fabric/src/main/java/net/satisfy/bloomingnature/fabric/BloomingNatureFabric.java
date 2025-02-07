@@ -983,10 +983,10 @@ public class BloomingNatureFabric implements ModInitializer {
             world.add(ModificationPhase.REMOVALS, desert, ctx -> ctx.getGenerationSettings().removeFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatures.DESERT_SLATE_SLABS));
             world.add(ModificationPhase.REMOVALS, desert, ctx -> ctx.getGenerationSettings().removeFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatures.DESERT_ORE_SLATE));
         }
-        if (config.addBloomingNatureBeachPalms) {
-            world.add(ModificationPhase.ADDITIONS, beach, ctx -> ctx.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatures.FAN_PALM_TREE));
+        if (config.addBloomingNatureDesertPalms) {
+            world.add(ModificationPhase.ADDITIONS, desert, ctx -> ctx.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatures.FAN_PALM_TREE));
         } else {
-            world.add(ModificationPhase.REMOVALS, beach, ctx -> ctx.getGenerationSettings().removeFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatures.FAN_PALM_TREE));
+            world.add(ModificationPhase.REMOVALS, desert, ctx -> ctx.getGenerationSettings().removeFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatures.FAN_PALM_TREE));
         }
         if (config.addBloomingNatureBeachFlowers) {
             world.add(ModificationPhase.ADDITIONS, beach, ctx -> ctx.getGenerationSettings().addFeature(GenerationStep.Decoration.VEGETAL_DECORATION, PlacedFeatures.BEACH_FLOWERS));

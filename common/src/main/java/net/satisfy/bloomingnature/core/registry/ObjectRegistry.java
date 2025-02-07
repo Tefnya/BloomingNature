@@ -523,7 +523,6 @@ public class ObjectRegistry {
         return getLogBlockSettings().explosionResistance(3.0F);
     }
 
-
     private static Item.Properties getSettings(Consumer<Item.Properties> consumer) {
         Item.Properties settings = new Item.Properties();
         consumer.accept(settings);

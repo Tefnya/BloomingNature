@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.satisfy.bloomingnature.core.registry.ObjectRegistry;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class SnowyFirLeavesBlock extends LeavesBlock {
     public static final BooleanProperty SNOWY = BooleanProperty.create("snowy");

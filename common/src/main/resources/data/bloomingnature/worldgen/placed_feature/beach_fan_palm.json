@@ -2,20 +2,12 @@
   "feature": "bloomingnature:beach_fan_palm",
   "placement": [
     {
+      "type": "minecraft:rarity_filter",
+      "chance": 10
+    },
+    {
       "type": "minecraft:count",
-      "count": {
-        "type": "minecraft:weighted_list",
-        "distribution": [
-          {
-            "weight": 1,
-            "data": 0
-          },
-          {
-            "weight": 1,
-            "data": 1
-          }
-        ]
-      }
+      "count": 2
     },
     {
       "type": "minecraft:in_square"
@@ -27,6 +19,146 @@
     {
       "type": "minecraft:heightmap",
       "heightmap": "OCEAN_FLOOR"
+    },
+    {
+      "type": "minecraft:block_predicate_filter",
+      "predicate": {
+        "type": "minecraft:any_of",
+        "predicates": [
+          {
+            "type": "minecraft:matching_blocks",
+            "offset": [
+              -12,
+              0,
+              0
+            ],
+            "blocks": [
+              "minecraft:water"
+            ]
+          },
+          {
+            "type": "minecraft:matching_blocks",
+            "offset": [
+              12,
+              0,
+              0
+            ],
+            "blocks": [
+              "minecraft:water"
+            ]
+          },
+          {
+            "type": "minecraft:matching_blocks",
+            "offset": [
+              0,
+              0,
+              -12
+            ],
+            "blocks": [
+              "minecraft:water"
+            ]
+          },
+          {
+            "type": "minecraft:matching_blocks",
+            "offset": [
+              0,
+              0,
+              12
+            ],
+            "blocks": [
+              "minecraft:water"
+            ]
+          },
+          {
+            "type": "minecraft:matching_blocks",
+            "offset": [
+              -6,
+              0,
+              0
+            ],
+            "blocks": [
+              "minecraft:water"
+            ]
+          },
+          {
+            "type": "minecraft:matching_blocks",
+            "offset": [
+              6,
+              0,
+              0
+            ],
+            "blocks": [
+              "minecraft:water"
+            ]
+          },
+          {
+            "type": "minecraft:matching_blocks",
+            "offset": [
+              0,
+              0,
+              -6
+            ],
+            "blocks": [
+              "minecraft:water"
+            ]
+          },
+          {
+            "type": "minecraft:matching_blocks",
+            "offset": [
+              0,
+              0,
+              6
+            ],
+            "blocks": [
+              "minecraft:water"
+            ]
+          },
+          {
+            "type": "minecraft:matching_blocks",
+            "offset": [
+              -3,
+              0,
+              0
+            ],
+            "blocks": [
+              "minecraft:water"
+            ]
+          },
+          {
+            "type": "minecraft:matching_blocks",
+            "offset": [
+              3,
+              0,
+              0
+            ],
+            "blocks": [
+              "minecraft:water"
+            ]
+          },
+          {
+            "type": "minecraft:matching_blocks",
+            "offset": [
+              0,
+              0,
+              -3
+            ],
+            "blocks": [
+              "minecraft:water"
+            ]
+          },
+          {
+            "type": "minecraft:matching_blocks",
+            "offset": [
+              0,
+              0,
+              3
+            ],
+            "blocks": [
+              "minecraft:water"
+            ]
+          }
+        ]
+      }
     },
     {
       "type": "minecraft:block_predicate_filter",

@@ -86,8 +86,6 @@ public class ConfigFabric implements ConfigData {
     public boolean addBloomingNatureStonyShoresMossyCobblestoneBeach = true;
     //BEACH
     @ConfigEntry.Category("beach")
-    public boolean addBloomingNatureBeachPalms = true;
-    @ConfigEntry.Category("beach")
     public boolean addBloomingNatureBeachFlowers = true;
     @ConfigEntry.Category("beach")
     public boolean addBloomingNatureBeachSandLayers = true;
@@ -465,6 +463,8 @@ public class ConfigFabric implements ConfigData {
     @ConfigEntry.Category("sparsejungle")
     public boolean addBloomingNatureSparseJungleBuriedLaterit = true;
     //desert
+    @ConfigEntry.Category("desert")
+    public boolean addBloomingNatureDesertPalms = true;
     @ConfigEntry.Category("desert")
     public boolean addBloomingNatureDesertSmallCactus= true;
     @ConfigEntry.Category("desert")

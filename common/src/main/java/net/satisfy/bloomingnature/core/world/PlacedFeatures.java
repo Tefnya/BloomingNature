@@ -209,9 +209,6 @@ public class PlacedFeatures {
     public static final ResourceKey<PlacedFeature> BEACH_SAND_LAYER2    = registerKey("beach_sand_layer2");
     public static final ResourceKey<PlacedFeature> BEACH_SAND_LAYER3    = registerKey("beach_sand_layer3");
 
-
-
-
     public static ResourceKey<PlacedFeature> registerKey(String name) {
         return ResourceKey.create(Registries.PLACED_FEATURE, new BloomingNatureIdentifier(name));
     }
