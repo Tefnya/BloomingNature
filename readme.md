@@ -1,10 +1,17 @@
 <p align="center"><img src="https://imgur.com/aHbesRp.png" width="1200"></p>
 
-<h1 align="center">Welcome to BloomingNature</h1>
+<h1 style="text-align: center;">Welcome to BloomingNature</h1>
 <br>
-<p>Explore a redesigned overworld: new animals, reshaped biomes, livelier landscapes.</p><p>
+<p style="text-align: center;">
+    Explore a redesigned overworld: new animals, reshaped biomes, livelier landscapes.
+</p>
 <br>
-Virtually all biomes have been completely revamped: Trees in Forests, Birch Forests, Flower Forests, and Taiga Biomes are larger, redesigned, and host new species of animals. New flowers and plants adorn the surroundings. In Savannas, towering Baobab trees now grow, inhabited by bisons and termites. Beaches feature fan_palms, dry grass, and pelicans. In snowy regions, snow-covered spruces grow, creating a more rugged appearance.</p>
+<p style="text-align: center;">
+    Virtually all biomes have been completely revamped: Trees in Forests, Birch Forests, Flower Forests, 
+    and Taiga Biomes are larger and redesigned. New flowers and plants adorn 
+    the surroundings. In Savannas, towering Baobab trees now grow. In snowy regions, snow-covered spruces grow, creating a more 
+    rugged appearance.
+</p>
 
 <h1 align="center">Available for</h1>
 <p align="center"><img src="https://imgur.com/gREqi3m.png" width="240" height="120"></p>

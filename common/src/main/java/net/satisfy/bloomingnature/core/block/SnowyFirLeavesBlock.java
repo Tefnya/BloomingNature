@@ -15,15 +15,17 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.satisfy.bloomingnature.core.registry.ObjectRegistry;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;
 
 public class SnowyFirLeavesBlock extends LeavesBlock {
     public static final BooleanProperty SNOWY = BooleanProperty.create("snowy");
+    public static final BooleanProperty WATERLOGGED = BooleanProperty.create("waterlogged");
 
     public SnowyFirLeavesBlock(Properties properties) {
         super(properties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(DISTANCE, 7).setValue(PERSISTENT, false).setValue(SNOWY, false));
+        this.registerDefaultState(this.stateDefinition.any().setValue(DISTANCE, 7).setValue(PERSISTENT, false).setValue(WATERLOGGED, false).setValue(SNOWY, false));
     }
 
     @Override
@@ -37,51 +39,62 @@ public class SnowyFirLeavesBlock extends LeavesBlock {
     }
 
     @Override
-    public @NotNull BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        return this.defaultBlockState().setValue(SNOWY, shouldBeSnowy(ctx.getLevel(), ctx.getClickedPos()));
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        Level level = ctx.getLevel();
+        BlockPos pos = ctx.getClickedPos();
+        FluidState fluidstate = level.getFluidState(pos);
+        return this.defaultBlockState().setValue(DISTANCE, 7).setValue(PERSISTENT, true).setValue(SNOWY, shouldBeSnowy(level, pos)).setValue(WATERLOGGED, fluidstate.getType() == Fluids.WATER);
     }
 
     @Override
     public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
-        if (!state.getValue(PERSISTENT)) {
-            int distance = updateDistance(world, pos);
-            if (distance >= 7) {
-                world.removeBlock(pos, false);
-                return;
-            }
-            world.setBlock(pos, state.setValue(DISTANCE, distance), 3);
+        int newDistance = updateDistance(world, pos);
+        boolean newSnowy = shouldBeSnowy(world, pos);
+        if (newDistance >= 7 && !state.getValue(PERSISTENT) && !state.getValue(SNOWY)) {
+            world.removeBlock(pos, false);
+            return;
         }
-
-        boolean snowy = shouldBeSnowy(world, pos);
-        if (state.getValue(SNOWY) != snowy) {
-            world.setBlock(pos, state.setValue(SNOWY, snowy), 3);
+        if (state.getValue(DISTANCE) != newDistance || state.getValue(SNOWY) != newSnowy) {
+            state = state.setValue(DISTANCE, newDistance).setValue(SNOWY, newSnowy);
+            world.setBlock(pos, state, 3);
+        }
+        if (!state.getValue(PERSISTENT)) {
+            world.scheduleTick(pos, this, 0);
         }
     }
 
     @Override
     public @NotNull BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
-        if (direction == Direction.UP) {
-            boolean snowy = shouldBeSnowy(world, pos);
-            if (state.getValue(SNOWY) != snowy) {
-                return state.setValue(SNOWY, snowy);
-            }
+        if (state.getValue(WATERLOGGED)) {
+            world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
+        }
+        if (direction == Direction.UP && state.getValue(SNOWY) != shouldBeSnowy(world, pos)) {
+            state = state.setValue(SNOWY, shouldBeSnowy(world, pos));
+        }
+        if (!state.getValue(PERSISTENT)) {
+            world.scheduleTick(pos, this, 0);
         }
         return super.updateShape(state, direction, neighborState, world, pos, neighborPos);
     }
 
-
     private int updateDistance(Level world, BlockPos pos) {
         int minDistance = 7;
-        for (BlockPos neighbor : BlockPos.betweenClosed(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))) {
-            BlockState neighborState = world.getBlockState(neighbor);
-            if (neighborState.is(BlockTags.LOGS)) {
-                return 1;
-            }
-            if (neighborState.is(ObjectRegistry.FIR_LEAVES.get()) && neighborState.hasProperty(DISTANCE)) {
-                minDistance = Math.min(minDistance, neighborState.getValue(DISTANCE) + 1);
+        for (BlockPos neighborPos : BlockPos.betweenClosed(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))) {
+            BlockState neighborState = world.getBlockState(neighborPos);
+            if (neighborState.is(BlockTags.LOGS)) return 1;
+            if (neighborState.getBlock() instanceof LeavesBlock && neighborState.hasProperty(DISTANCE)) {
+                int candidate = neighborState.getValue(DISTANCE) + 1;
+                if (candidate < minDistance) {
+                    minDistance = candidate;
+                    if (minDistance == 1) break;
+                }
             }
         }
         return minDistance;
     }
 
+    @Override
+    public @NotNull FluidState getFluidState(BlockState state) {
+        return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
+    }
 }
